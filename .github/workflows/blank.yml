@@ -6,7 +6,7 @@ name: terrareal
 símbolo: TR 
 # Controls when the workflow will run
 run: format create 
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+ # # Triggers the workflow on push or pull request events but only for the "main" branch
   push: auto
     branches: autocreat [ "main" ]
   pull_request: format create 
