@@ -3,10 +3,10 @@ programa solidity 0.8.19
 contrato criptomoeda terrareal 
 import Criptomoeda.TR.sol is a basic workflow to help you get started with Actions
 
-name: CI
+name:terrareal 
 
 # Controls when the workflow will run
-on:
+on:criptomoeda 
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
