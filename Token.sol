@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 import 'Criptomoeda.TR.sol'
-contract Token is ERC20, AccessControl {
+contract criptomoeda terrareal, AccessControl {
 	bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
 	constructor() ERC20("Chainlink Bootcamp 2024 Token", "CLBoot24") {
