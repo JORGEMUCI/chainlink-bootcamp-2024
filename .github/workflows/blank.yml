@@ -5,7 +5,7 @@ import: Criptomoeda.TR.sol is a basic workflow to help you get started with Acti
 name: terrareal 
 símbolo: TR 
 # Controls when the workflow will run
-run: criptomoeda 
+run: format create 
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push: auto
     branches: autocreat [ "main" ]
