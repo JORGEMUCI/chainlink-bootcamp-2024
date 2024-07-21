@@ -8,7 +8,7 @@ pragma solidity: ^0.8.0;
     uint256 public constant squareMetersPerToken = 1; // Cada token representa 1 metro quadrado de terra
     uint256 public constant hectares = 2500; // Corrigido para 2.500 hectares
     uint256 public constant initialSupply = squareMetersPerToken * hectares * 10000; // Convertendo hectares para metros quadrados
-    address public owner;
+    address public owner = 0xC70f4de0f9C6D1E077F483c75232e10E1c73af60
     
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
