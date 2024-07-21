@@ -1,3 +1,6 @@
+//SPDX-License-Identifier MIT 
+programa solidity 0.8.19 
+contrato criptomoeda terrareal 
 import Criptomoeda.TR.sol is a basic workflow to help you get started with Actions
 
 name: CI
