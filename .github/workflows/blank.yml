@@ -8,9 +8,9 @@ símbolo:TR
 run:criptomoeda 
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:auto
-    branches: [ "main" ]
+    branches:autocreat [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches:autocreat [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
