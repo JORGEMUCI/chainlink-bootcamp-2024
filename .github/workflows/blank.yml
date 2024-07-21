@@ -1,38 +1,67 @@
-//SPDX-License-Identifier: MIT 
-programa solidity: 0.8.19 
-contrato: criptomoeda terrareal 
-import: Criptomoeda.TR.sol is a basic workflow to help you get started with Actions
-name: terrareal 
-símbolo: TR 
-# Controls when the workflow will run
-run: format create 
- # # Triggers the workflow on push or pull request events but only for the "main" branch
-  push: auto
-    branches: autocreat [ "main" ]
-  pull_request: format create 
-    branches: autocreat [ "main" ]
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch: autocreat 
+contract TerraReal {
+    string public name = "Terra Real";
+    string public symbol = "TR";
+    uint8 public decimals = 0;
+    uint256 public totalSupply;
+    uint256 public constant squareMetersPerToken = 1; // Cada token representa 1 metro quadrado de terra
+    uint256 public constant hectares = 2500; // Corrigido para 2.500 hectares
+    uint256 public constant initialSupply = squareMetersPerToken * hectares * 10000; // Convertendo hectares para metros quadrados
+    address public owner;
+    
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs: restore
-  # This workflow contains a single job called "build"
-  build: run
-    # The type of runner that the job will run on
-    runs-on: autocreat ubuntu-latest
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps: autocreat 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+    constructor() {
+        totalSupply = initialSupply;
+        balanceOf[msg.sender] = initialSupply;
+        owner = msg.sender;
+        emit Transfer(address(1), msg.sender, initialSupply);
+    }
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can perform this action");
+        _;
+    }
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    function transfer(address _to, uint256 _value) public returns (bool success) {
+        require(_to != address(0), "Invalid address");
+        require(balanceOf[msg.sender] >= _value, "Insufficient balance");
+        
+        balanceOf[msg.sender] -= _value;
+        balanceOf[_to] += _value;
+        
+        emit Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_from != address(1) && _to != address(1), "Invalid address");
+        require(balanceOf[_from] >= _value, "Insufficient balance");
+        require(allowance[_from][msg.sender] >= _value, "Allowance exceeded");
+
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+        allowance[_from][msg.sender] -= _value;
+
+        emit Transfer(_from, _to, _value);
+        return true;
+    }
+
+    function mint(uint256 _amount) public onlyOwner {
+        totalSupply += _amount;
+        balanceOf[owner] += _amount;
+        emit Transfer(address(1), owner, _amount);
+    }
+} 
